@@ -12,14 +12,42 @@
 <script>
     /**
   File: index.html -script is all inside script tag
-  Student's Name: Pramod Regmi, Gurjeet Sing
+  Student's Name: Pramod Regmi, Gurjeet Singh
   StudentID: 200577094, 
-  Date: 02-02024
+  Date: 02-02-2024
  */
     async function getdata(url) {   //Fetching data from url
         const response = await fetch(url);
         return await response.json();
     }
+
+    function displayDetails(pokemon) { // function to generate details.
+    var detailsPart = document.getElementById('Pokemondetails'); //getting the details
+    detailsPart.innerHTML = pokemondesc(pokemon); // setting the content using generated description from above function.
+
+    var abilities = document.getElementById('abilities'); // for abilities getting container
+    pokemon.abilities.forEach(function (ability) {
+        var listItem = document.createElement('li'); // Creating list items
+        listItem.textContent = ability.ability.name;
+        listItem.addEventListener('click', async function () { // Using event listener.
+            var abilityDetails = await getdata(ability.ability.url);
+            alert(                                              // Showing details as a popup
+                'Ability Name: ' + abilityDetails.name +
+                '\nAbility Effect: ' + abilityDetails.effect_entries.find(function (entry) {
+                    return entry.language.name === 'en';
+                }).effect +
+                '\nAbility Short Effect: ' + abilityDetails.effect_entries.find(function (entry) {
+                    return entry.language.name === 'en';
+                }).short_effect +
+                '\nFlavor Text: ' + abilityDetails.flavor_text_entries.find(function (entry) {
+                    return entry.language.name === 'en';
+                }).flavor_text
+            );
+        });
+        abilities.appendChild(listItem); //append the listItem to abilities
+    });
+}
+
 
     function pokemondesc(pokemon) { //genetating the description and displaying in different tags according to title.
     return (
@@ -32,6 +60,8 @@
         '<ul id="abilities"></ul>'
     );
 }
+
+
 </script>
     
 </body>
