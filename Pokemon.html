@@ -6,10 +6,33 @@
     <title>Pokeman API</title>
 </head>
 <body>
-    <div id="pokemon-list"></div> <!--To display pokeman list-->
-    <div id="pokemon-details"></div><!--To display features of pokeman-->
+    <div id="Pokemons"></div>
+<div id="Pokemondetails"></div>
 
-    <script src="main.js"></script>
+<script>
+    /**
+  File: index.html -script is all inside script tag
+  Student's Name: Pramod Regmi, Gurjeet Sing
+  StudentID: 200577094, 
+  Date: 02-02024
+ */
+    async function getdata(url) {   //Fetching data from url
+        const response = await fetch(url);
+        return await response.json();
+    }
+
+    function pokemondesc(pokemon) { //genetating the description and displaying in different tags according to title.
+    return (
+        '<h2>' + pokemon.name + '</h2>' +
+        '<img src="' + pokemon.sprites.front_default + '" alt="' + pokemon.name + '">' +
+        '<p><b>Abilities:</b> ' + pokemon.abilities.map(ability => ability.ability.name).join(', ') + '</p>' +
+        '<p><b>Height:</b> ' + pokemon.height + '</p>' +
+        '<p><b>Base Experience:</b> ' + pokemon.base_experience + '</p>' +
+        '<h3>Abilities Details:</h3>' +
+        '<ul id="abilities"></ul>'
+    );
+}
+</script>
     
 </body>
 </html>
