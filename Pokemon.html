@@ -13,8 +13,9 @@
     /**
   File: index.html -script is all inside script tag
   Student's Name: Pramod Regmi, Gurjeet Singh
-  StudentID: 200577094, 
+  StudentID: 200577094, 200567055
   Date: 02-02-2024
+  Contributed equally both the team members
  */
     async function getdata(url) {   //Fetching data from url
         const response = await fetch(url);
@@ -60,9 +61,52 @@
         '<ul id="abilities"></ul>'
     );
 }
+    // function to display list
+async function displayPokemonList() {  
+        const pokemonListContainer = document.getElementById('Pokemons');
+        const pokemonNames = ['rattata', 'charmander', 'squirtle', 'pikachu', 'weedle']; // array of pokemon names
+
+        for (const pokemonName of pokemonNames) {
+            const pokemonData = await getdata(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+            const pokemonContainer = document.createElement('div'); //Creating container to display list 
+            pokemonContainer.className = 'pokemon';
+            pokemonContainer.innerHTML =
+            '<img src="' + pokemonData.sprites.front_default + '" alt="' + pokemonData.name + '">' +
+            '<p>' + pokemonData.name + '</p>';
+
+            pokemonContainer.addEventListener('click', () => displayDetails(pokemonData)); // Adding click event
+            pokemonListContainer.appendChild(pokemonContainer);
+        }
+    }
+
+    displayPokemonList(); // Calling function to display list
 
 
 </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #Pokemons{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            border: 1px solid black;
+        }
+        .pokemon {
+            cursor: pointer;
+            margin: 10px;
+            border: 1px solid black;
+        }
+        #Pokemondetails {
+            text-align: left;
+            border: 1PX solid black;
+            padding: 20px;
+        }
+    </style>
     
 </body>
 </html>
